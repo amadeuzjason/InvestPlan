@@ -1,28 +1,24 @@
-import './globals.css'
-import Image from "next/image"
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
 
-export const metadata = {
-  title: 'InvestPlan',
-  description: 'Belajar Simulasi Investasi dengan Cara Mudah',
-}
+const inter = Inter({ subsets: ["latin"] });
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export const metadata: Metadata = {
+  title: "InvestPlan",
+  description: "Belajar Simulasi Investasi dengan Cara Mudah",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="en">
-      <body className="min-h-screen text-gray-900">
-        {/* Background image */}
-        <Image
-          src="/bg.png"
-          alt="Background"
-          fill
-          className="object-cover -z-10"
-          loading="eager"
-        />
-        {/* Overlay tipis biar teks kontras */}
-        <div className="absolute inset-0 bg-white/50 -z-10" />
-
+    <html lang="id" className="h-full antialiased">
+      <body className={`${inter.className} min-h-full flex flex-col`}>
         {children}
       </body>
     </html>
-  )
+  );
 }
