@@ -1,65 +1,63 @@
-import Image from "next/image";
+import FAQ from "../components/FAQ"
+import './globals.css'
+import Image from "next/image"
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <>
+    <main className="relative z-10">
+      {/* Navbar */}
+      <header className="flex justify-between items-center px-8 py-4 shadow-md bg-white fixed top-0 left-0 right-0 z-20">
+        <h1 className="text-2xl font-bold text-[#194a7a]">InvestPlan</h1>
+        <div className="flex items-center gap-10">
+          <nav className="hidden md:flex gap-8 text-gray-700 font-medium">
+            <a href="#faq" className="hover:text-blue-600">FAQ</a>
+            <a href="#privacy" className="hover:text-blue-600">Privacy</a>
+            <a href="#support" className="hover:text-blue-600">Support</a>
+          </nav>
+          <div className="flex gap-4">
+            <button className="px-5 py-2 rounded-lg border border-[#194a7a] text-[#194a7a] font-semibold hover:bg-[#194a7a] hover:text-white transition cursor-pointer">
+              Login
+            </button>
+            <button className="px-5 py-2 rounded-lg text-white font-semibold bg-[#194a7a] hover:bg-[#476F95] transition cursor-pointer">
+              Sign Up
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="flex flex-col md:flex-row items-center gap-12 justify-center h-screen px-6 max-w-7xl mx-auto">
+        {/* Kolom kiri: teks */}
+        <div className="text-center md:text-left">
+          <h2 className="lg:text-5xl md:text-4xl text-3xl font-bold mb-6 text-gray-900">
+            Belajar Simulasi Investasi dengan Cara Mudah
+          </h2>
+          <p className="max-w-xl text-lg md:text-xl text-gray-700 mb-10">
+            Praktikkan investasi saham dan reksadana, serta pelajari modul edukasi risiko melalui InvestPlan.
           </p>
+          <button className="bg-[#194a7a] hover:bg-[#476F95] text-white px-10 py-4 rounded-lg text-xl font-semibold transition cursor-pointer">
+            Mulai Sekarang
+          </button>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Kolom kanan: gambar hero */}
+        <div className="flex justify-center lg:w-5xl md:w-3xl md:justify-end md:block hidden">
+          <Image
+            src="/main_img.png"
+            alt="Ilustrasi Investasi"
+            width={800}
+            height={800 }
+            priority
+          />
         </div>
-      </main>
-    </div>
-  );
+      </section>
+
+      {/* FAQ Section */}
+      <section id="faq" className="max-w-4xl mx-auto">
+        <FAQ />
+      </section>
+    </main>
+    </>
+  )
 }
