@@ -60,7 +60,7 @@ export default function WelcomePage() {
 
         <div className="flex items-center gap-8">
           <nav className="hidden md:flex items-center gap-8 text-smP font-medium text-gray-700">
-            <Link href="/faq" className="hover:text-[#194A7A] transition-colors">
+            <Link href="/#faq" className="hover:text-[#194A7A] transition-colors">
               FAQ
             </Link>
             <Link href="/privacy" className="hover:text-[#194A7A] transition-colors">
@@ -91,25 +91,22 @@ export default function WelcomePage() {
       {/* ── HERO SECTION ── */}
       <section className="relative min-h-screen w-full overflow-hidden">
         {/* Background */}
-        <div className="absolute inset-0 -z-10">
           <Image
-            src="/images/welcomePage/bg-welcome.jpg"
+            src="/bg.png"
             alt="Background"
             fill
-            className="object-cover object-center"
-            priority
+            className="object-cover -z-10"
+            loading="eager"
           />
-        </div>
+        <div className="absolute inset-0 bg-white/50 z-0" />
 
-        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between px-10 pt-16 pb-24 max-w-7xl mx-auto gap-10 min-h-screen">
+        <div className="relative z-10 flex flex-col md:pt-0 pt-44 md:pt-0 md:flex-row items-center justify-between px-10 pb-8 max-w-7xl mx-auto gap-10 min-h-screen">
           {/* Left */}
           <div className="flex-1 max-w-xl">
             <h1
-              className="font-bold text-gray-900 leading-tight mb-5"
-              style={{ fontSize: "45px" }}
+              className="font-bold text-gray-900 text-4xl leading-tight mb-5 lg:text-[45px]"
             >
               Belajar Simulasi Investasi
-              <br />
               dengan Cara Mudah
             </h1>
             <p className="text-gray-700 text-base md:text-lg leading-relaxed mb-8">
@@ -126,7 +123,7 @@ export default function WelcomePage() {
 
           {/* Right */}
           <div className="flex-1 flex justify-center md:justify-end">
-            <div className="relative w-[340px] h-[340px] md:w-[480px] md:h-[420px]">
+            <div className="relative md:block hidden w-[340px] h-[340px] lg:w-[480px] lg:h-[420px]">
               <Image
                 src="/images/welcomePage/main_img.png"
                 alt="Ilustrasi Investasi"
@@ -140,7 +137,7 @@ export default function WelcomePage() {
       </section>
 
       {/* ── FAQ SECTION ── */}
-      <section className="bg-white py-20 px-6">
+      <section id="faq" className="bg-white py-20 px-6 min-h-screen">
         <div className="max-w-3xl mx-auto">
           <h2
             className="text-center font-semibold text-gray-900 mb-12"
