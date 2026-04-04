@@ -73,8 +73,8 @@ export default function VerifyOTP() {
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-white/50 z-0"/>
-        
+        <div className="absolute inset-0 bg-white/30 z-0"/>
+
         <div className="relative z-10 flex items-center justify-center min-h-screen">
           <form
             onSubmit={handleSubmit}

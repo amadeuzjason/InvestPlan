@@ -18,12 +18,12 @@ export default function ForgotPassword() {
     <>
       <main className="relative min-h-screen w-full">
         <Image src="/bg.png" alt="Background" fill className="object-cover" priority />
-        <div className="absolute inset-0 bg-white/60 z-0" />
+        <div className="absolute inset-0 bg-white/30 z-0" />
 
         <div className="relative z-10 flex items-center justify-center min-h-screen px-4">
           <form
             onSubmit={handleSubmit}
-            className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6 md:p-8 text-center border border-gray-200"
+            className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 text-center border border-gray-200"
           >
             <h2 className="text-2xl font-semibold mb-2">Forgot Password?</h2>
 
