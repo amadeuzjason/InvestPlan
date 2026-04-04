@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function SignUpPage() {
     const router = useRouter();
@@ -31,7 +32,7 @@ export default function SignUpPage() {
                 </div>
 
                 <nav className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 flex gap-8 text-gray-600 font-medium">
-                  <a href="/faq" className="hover:text-blue-600">FAQ</a>
+                  <Link href="../#faq" className="hover:text-blue-600">FAQ</Link>
                   <a href="/privacy" className="hover:text-blue-600">Privacy</a>
                   <a href="/support" className="hover:text-blue-600">Support</a>
                 </nav>
