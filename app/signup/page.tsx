@@ -83,8 +83,8 @@ export default function SignUpPage() {
                             </button>
                         </form>
                         <p className="mt-6 text-center text-gray-500 text-sm">
-                            Already have an acoount?
-                            <a href="/login" className="font-semibold text-black">Login</a>
+                            Already have an acoount? 
+                            <a href="/login" className="font-semibold text-black"> Login</a>
                         </p>
                     </div>
                 </div>
