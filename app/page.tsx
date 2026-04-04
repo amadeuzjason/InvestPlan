@@ -1,4 +1,4 @@
-import FAQ from "../components/FAQ"
+import FAQ from "./components/sections/FAQ"
 import './globals.css'
 import Image from "next/image"
 import Link from "next/link"

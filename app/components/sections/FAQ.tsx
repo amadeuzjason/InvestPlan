@@ -49,10 +49,10 @@ export default function FAQ() {
                 </button>
 
                 <div
-                  ref={(el) => (contentRefs.current[i] = el)}
-                  className={`px-6 text-gray-600 overflow-hidden transition-all duration-300`}
-                  style={{ maxHeight: isOpen && contentRefs.current[i] ? `${contentRefs.current[i]!.scrollHeight}px` : '0px' }}
-                >
+                    className={`px-6 text-gray-600 overflow-hidden transition-all duration-300 ${
+                    isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                     }`}
+                  >
                   <div className={`transform transition-all duration-300 ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-1'}`}>
                       <p className="pb-4 leading-relaxed whitespace-pre-line">{item.a}</p>
                     </div>
