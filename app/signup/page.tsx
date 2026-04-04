@@ -15,7 +15,7 @@ export default function SignUpPage() {
     return (
         <>
         <main className="flex min-h-screen">
-            <div className="flex-2 relative flex flex-col justify-center p-20 overflow-hidden">
+            <div className="flex-1 lg:flex-2 relative flex-col justify-center p-12 lg:p-16 overflow-hidden hidden md:flex">
                 <Image
                 src= "/bg.png"
                 alt="Background"
@@ -25,8 +25,8 @@ export default function SignUpPage() {
                 />
                 <div className="absolute inset-0 bg-white/50 z-0"/>
                 <div className="relative z-10">
-                    <h1 className="text-6xl font-bold text-black mb-2">InvestPlan</h1>
-                    <p className="max-w-lg text-lg">Belajar simulasi investasi saham dan reksadana, serta modul edukasi
+                    <h1 className="text-5xl lg:text-6xl font-bold text-black mb-2">InvestPlan</h1>
+                    <p className="max-w-lg text-md lg:text-lg">Belajar simulasi investasi saham dan reksadana, serta modul edukasi
               risiko, melalui InvestPlan.
               </p>
                 </div>
