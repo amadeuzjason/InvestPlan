@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { Inter } from "next/font/google";
 import { useState } from "react";
 import SideNavbar from "@/app/components/layout/sideNavbar";
@@ -15,7 +14,7 @@ export default function SimulasiInvestasiPage() {
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
   const [successPurchase, setSuccessPurchase] = useState<{ nama: string; jumlah: number; total: number } | null>(null);
 
-  // Virtual saldo — sync with Dashboard stat if you later centralize state
+  // Virtual saldo
   const virtualSaldo = 9200000; // Rp9.200.000
 
   const priceMap: Record<string, number> = {
@@ -93,7 +92,6 @@ export default function SimulasiInvestasiPage() {
     if (!jumlah || Number(jumlah) < 1) return setError("Masukkan jumlah unit yang valid.");
     if (total > virtualSaldo) return setError("Saldo virtual tidak cukup untuk transaksi ini.");
 
-    // Set success modal data instead of alert
     setSuccessPurchase({ nama: selected, jumlah: Number(jumlah), total });
     setSelected("");
     setJumlah("");
