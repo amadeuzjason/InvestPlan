@@ -170,12 +170,15 @@ function KonfirmasiJualModal({
 }: {
   asset: Asset;
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm: (jumlah: number) => void;
 }) {
-  const totalNilai = asset.jumlahNum * asset.hargaSaatIniNum;
-  const gainLossLabel = asset.isPositive
-    ? `+${formatRupiah(asset.gainLossNum)}`
-    : formatRupiah(asset.gainLossNum);
+  const [jumlah, setJumlah] = useState<number>(1);
+
+  const totalNilai = jumlah * asset.hargaSaatIniNum;
+
+  const gainLossPerUnit = asset.jumlahNum > 0 ? asset.gainLossNum / asset.jumlahNum : 0;
+  const saleGainLossNum = Math.round(gainLossPerUnit * jumlah);
+  const gainLossLabel = saleGainLossNum > 0 ? `+${formatRupiah(saleGainLossNum)}` : formatRupiah(saleGainLossNum);
 
   return (
     // Backdrop dengan blur
@@ -195,9 +198,20 @@ function KonfirmasiJualModal({
         <div className="flex flex-col gap-4 mb-5">
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-500">Jumlah Unit</span>
-            <span className="text-sm text-gray-900 bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 w-44 text-right">
-              {asset.jumlahNum}
-            </span>
+              <input
+              type="number"
+              min={1}
+              max={asset.jumlahNum}
+              value={jumlah}
+              onChange={(e) => {
+                const v = parseInt(e.target.value || "0", 10);
+                if (isNaN(v)) return setJumlah(1);
+                if (v < 1) return setJumlah(1);
+                if (v > asset.jumlahNum) return setJumlah(asset.jumlahNum);
+                setJumlah(v);
+              }}
+              className="text-sm text-gray-900 bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 w-44 text-right"
+            />
           </div>
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-500">Harga Jual per Unit</span>
@@ -214,20 +228,16 @@ function KonfirmasiJualModal({
         </div>
 
         {/* Info tambahan */}
-        <div className="text-sm text-gray-500 space-y-1 mb-7">
+          <div className="text-sm text-gray-500 space-y-1 mb-7">
           <p>
-            Setelah penjualan, total investasi aktif berkurang{" "}
+            Setelah penjualan, total investasi aktif berkurang {" "}
             <span className="font-bold text-gray-900">
               {formatRupiah(totalNilai)}
             </span>
           </p>
           <p>
-            Total Gain/Loss dari transaksi ini:{" "}
-            <span
-              className={`font-semibold ${
-                asset.isPositive ? "text-green-500" : "text-red-400"
-              }`}
-            >
+            Total Gain/Loss dari transaksi ini: {" "}
+            <span className={`font-semibold ${saleGainLossNum > 0 ? "text-green-500" : "text-red-400"}`}>
               {gainLossLabel}
             </span>
           </p>
@@ -236,7 +246,7 @@ function KonfirmasiJualModal({
         {/* Actions */}
         <div className="flex gap-3">
           <button
-            onClick={onConfirm}
+            onClick={() => onConfirm(jumlah)}
             className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-3 rounded-xl transition-colors"
           >
             Konfirmasi Jual
@@ -318,14 +328,14 @@ export default function DashboardPage() {
     year: "numeric",
   });
 
-  const handleConfirmJual = () => {
-  if (!selectedAsset) return
+  const handleConfirmJual = (jumlah: number) => {
+    if (!selectedAsset) return;
 
-  console.log("Jual dikonfirmasi:", selectedAsset.nama)
+    console.log("Jual dikonfirmasi:", selectedAsset.nama, "jumlah:", jumlah);
 
-  setSuccessAsset(selectedAsset) // tampilkan sukses
-  setSelectedAsset(null)         // tutup modal konfirmasi
-}
+    setSuccessAsset({ ...selectedAsset, jumlahNum: jumlah }); // tampilkan sukses dengan jumlah dijual
+    setSelectedAsset(null); // tutup modal konfirmasi
+  };
 
   return (
     <div className={`${inter.className} flex min-h-screen`}>
@@ -339,7 +349,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Stat Cards */}
-        <div className="grid grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-rows md:grid-cols-4 gap-4 mb-8">
           {statCards.map((card, i) => (
             <div
               key={i}
@@ -505,11 +515,11 @@ export default function DashboardPage() {
         />
       )}
       {successAsset && (
-  <SuksesModal
-    asset={successAsset}
-    onClose={() => setSuccessAsset(null)}
-  />
-)}
+        <SuksesModal
+          asset={successAsset}
+          onClose={() => setSuccessAsset(null)}
+        />
+      )}
     </div>
   );
 }
