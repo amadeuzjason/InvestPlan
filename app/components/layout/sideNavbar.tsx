@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Inter } from "next/font/google";
 import { useState } from "react";
+import LogoutConfirm from "../logout/logoutconfirm";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,6 +35,14 @@ const navItems = [
 export default function SideNavbar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
+  const router = useRouter();
+  const [showLogout, setShowLogout] = useState(false);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setShowLogout(false);
+    router.push("/login");
+  }
 
   return (
     <>
@@ -127,7 +136,7 @@ export default function SideNavbar() {
         {/* Logout */}
         <div className="mt-4 border-t border-gray-100 pt-4">
           <button
-            onClick={() => console.log("Logout clicked")}
+            onClick={() => setShowLogout(true)}
             title={collapsed ? "Logout" : undefined}
             className={`flex items-center gap-3 w-full rounded-lg text-sm font-medium text-red-400 hover:bg-red-50 hover:text-red-600 transition-all duration-150
               ${collapsed ? "justify-center px-0 py-2.5" : "px-3 py-2.5"}`}
@@ -141,6 +150,11 @@ export default function SideNavbar() {
             />
             {!collapsed && <span>Logout</span>}
           </button>
+          <LogoutConfirm
+            isOpen={showLogout}
+            onClose={() => setShowLogout(false)}
+            onConfirm={handleLogout}
+          />
         </div>
       </aside>
 
