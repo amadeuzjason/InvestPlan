@@ -16,17 +16,17 @@ const navItems = [
   },
   {
     label: "Simulasi Investasi",
-    href: "/simulasi-investasi",
+    href: "/Main/simulasi-investasi",
     icon: "/icons/sideNavbar/simulasiInvest.png",
   },
   {
     label: "Modul Belajar",
-    href: "/modul-belajar",
+    href: "/Main/modul-belajar",
     icon: "/icons/sideNavbar/modul.png",
   },
   {
     label: "Akun",
-    href: "/akun",
+    href: "/Main/akun",
     icon: "/icons/sideNavbar/akun.png",
   },
 ];
