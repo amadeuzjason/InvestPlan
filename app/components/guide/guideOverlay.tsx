@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-type Mode = "navbar" | "dashboard" | "spotlight" | "focus-large";
+type Mode = "navbar" | "dashboard" | "spotlight" | "focus-large" | "confirm";
 
 export default function GuideOverlay({
   targetId,
@@ -366,6 +366,98 @@ export default function GuideOverlay({
         <button
           onClick={onNext}
           className="bg-black text-white px-4 py-2 rounded-lg w-full"
+        >
+          Lanjutkan
+        </button>
+      </div>
+    </>
+  );
+}
+
+if (mode === "confirm") {
+  const highlight = {
+    top: rect.top,
+    left: rect.left,
+    width: rect.width,
+    height: rect.height,
+  };
+
+  const isMobile = window.innerWidth < 768;
+
+  const tooltipWidth = isMobile ? window.innerWidth - 32 : 320;
+
+  const centerX = highlight.left + highlight.width / 2 - tooltipWidth / 2;
+  const safeLeft = isMobile
+    ? 16
+    : Math.max(16, Math.min(centerX, window.innerWidth - tooltipWidth - 16));
+
+  const tooltipHeight = 100;
+  let tooltipTop = highlight.top + highlight.height + 16;
+
+  if (tooltipTop + tooltipHeight > window.innerHeight) {
+    tooltipTop = highlight.top - tooltipHeight - 16;
+  }
+
+  return (
+    <>
+      {/* ATAS */}
+      <div
+        className="fixed bg-black/60 backdrop-blur-sm z-40"
+        style={{
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: highlight.top,
+        }}
+      />
+
+      {/* BAWAH */}
+      <div
+        className="fixed bg-black/60 backdrop-blur-sm z-40"
+        style={{
+          top: highlight.top + highlight.height,
+          left: 0,
+          width: "100%",
+          height: `calc(100vh - ${highlight.top + highlight.height}px)`,
+        }}
+      />
+
+      {/* KIRI */}
+      <div
+        className="fixed bg-black/60 backdrop-blur-sm z-40"
+        style={{
+          top: highlight.top,
+          left: 0,
+          width: highlight.left,
+          height: highlight.height,
+        }}
+      />
+
+      {/* KANAN */}
+      <div
+        className="fixed bg-black/60 backdrop-blur-sm z-40"
+        style={{
+          top: highlight.top,
+          left: highlight.left + highlight.width,
+          width: `calc(100vw - ${highlight.left + highlight.width}px)`,
+          height: highlight.height,
+        }}
+      />
+
+      {/* TOOLTIP */}
+      <div
+        className="fixed z-50 bg-white px-4 py-3 rounded-xl shadow-xl"
+        style={{
+          width: tooltipWidth,
+          top: tooltipTop,
+          left: safeLeft,
+        }}
+      >
+        <p className="text-sm text-gray-700 mb-3">{text}</p>
+
+        <button
+          onClick={onNext}
+          className="w-full bg-black text-white py-2 rounded-lg"
         >
           Lanjutkan
         </button>

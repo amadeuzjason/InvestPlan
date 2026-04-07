@@ -66,6 +66,13 @@ export default function GuidePage() {
       {/* STEP 7 - ASET*/}
       {step === 7 && <GuideOverlay targetId="aset-table" text="Aset yang Anda miliki di InvestPlan akan terlampir disini. Anda dapat memilih antar menjual atau membeli." onNext={nextStep} mode="focus-large"/>}
 
+{/* step 8 - jual (belum selesai*/}
+      {step === 8 && <GuideOverlay
+      targetId="modal-confirm"
+      text="Anda dapat menjual aset yang Anda miliki. Namun sebelum Anda melakukan penjualan aset, ada baiknya Anda memerhatikan ikhtisar pasar terlebih dahulu untuk mendapatkan rpofit maksimum."
+      onNext={nextStep}
+      mode="confirm"/>}
+
       {/* STEP 10 - Done */}
       {step === 10 && (
         <>

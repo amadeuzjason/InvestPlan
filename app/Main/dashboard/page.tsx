@@ -165,10 +165,12 @@ function formatRupiah(num: number) {
 
 // ─── Modal Konfirmasi Jual ────────────────────────────────────────────────────
 function KonfirmasiJualModal({
+  id,
   asset,
   onClose,
   onConfirm,
 }: {
+  id: string; 
   asset: Asset;
   onClose: () => void;
   onConfirm: (jumlah: number) => void;
@@ -437,7 +439,8 @@ export default function DashboardPage() {
                       {asset.gainLoss}
                     </td>
                     <td className="px-4 py-3.5">
-                      <div className="flex items-center gap-2">
+                      <div 
+                        className="flex items-center gap-2">
                         {/* Keranjang (Beli) — bg hitam, icon putih */}
                         <button className="w-8 h-8 rounded-lg bg-gray-900 flex items-center justify-center hover:bg-gray-700 transition-colors">
                           <Image
@@ -523,6 +526,7 @@ export default function DashboardPage() {
       {/* Modal Konfirmasi Jual */}
       {selectedAsset && (
         <KonfirmasiJualModal
+        id="modal-cofirm"
           asset={selectedAsset}
           onClose={() => setSelectedAsset(null)}
           onConfirm={handleConfirmJual}
