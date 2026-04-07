@@ -48,12 +48,13 @@ export default function SideNavbar() {
   return (
     <>
       {/* ─── MOBILE TOP NAVBAR ─────────────────────────────────────────── */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100">
+      <div id="navbar-mobile" className="md:hidden fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100">
         <div className="flex items-center justify-between px-4 py-3">
           <h1 className="text-lg font-bold text-gray-900 tracking-tight">
             InvestPlan
           </h1>
           <button
+          id="hamburger"
             onClick={() => setMobileOpen(!mobileOpen)}
             className="w-9 h-9 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
           >
@@ -161,7 +162,7 @@ export default function SideNavbar() {
 
       {/* ─── DESKTOP SIDE NAVBAR ───────────────────────────────────────── */}
       <aside
-        className={`${inter.className} hidden md:flex fixed top-0 left-0 h-screen bg-white border-r border-gray-100 flex-col py-6 z-40 transition-all duration-300 ease-in-out
+        id="navbar-desktop" className={`${inter.className} hidden md:flex fixed top-0 left-0 h-screen bg-white border-r border-gray-100 flex-col py-6 z-40 transition-all duration-300 ease-in-out
           ${collapsed ? "w-[68px] px-3" : "w-[220px] px-4"}`}
       >
         {/* Logo + Collapse Button */}

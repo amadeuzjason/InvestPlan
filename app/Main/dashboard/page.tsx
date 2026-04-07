@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import { useState } from "react";
 import SideNavbar from "@/app/components/layout/sideNavbar";
+import GuidePage from "@/app/components/guide/guidePage";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -339,9 +340,10 @@ export default function DashboardPage() {
 
   return (
     <div className={`${inter.className} flex min-h-screen`}>
+      <GuidePage />
       <SideNavbar />
 
-      <div className="flex-1 bg-[#F7F8FA] min-h-screen p-8 overflow-y-auto">
+      <div id="dashboard-area" className="flex-1 bg-[#F7F8FA] min-h-screen p-8 overflow-y-auto">
         {/* Header */}
         <div className="mb-7">
           <h2 className="text-2xl font-bold text-gray-900">Dashboard</h2>
@@ -349,9 +351,21 @@ export default function DashboardPage() {
         </div>
 
         {/* Stat Cards */}
-        <div className="grid grid-rows md:grid-cols-4 gap-4 mb-8">
+        <div
+        className="grid grid-rows md:grid-cols-4 gap-4 mb-8">
           {statCards.map((card, i) => (
             <div
+            id={
+              card.label === "Total Saldo Virtual"
+              ? "saldo-card"
+              : card.label === "Total Investasi Aktif"
+              ? "investasi-card"
+              : card.label === "Total Keuntungan/Kerugian"
+              ? "keuntungan-card"
+              : card.label === "Modul yang sudah diselesaikan"
+              ? "modul-card"
+              :undefined
+            }
               key={i}
               className="bg-white rounded-2xl p-5 flex flex-col gap-3 shadow-sm border border-gray-100 relative"
             >
@@ -383,7 +397,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Aset yang Dimiliki */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 mb-6">
+        <div id="aset-table" className="bg-white rounded-2xl shadow-sm border border-gray-100 mb-6">
           <div className="px-6 py-4 border-b border-gray-100">
             <h3 className="text-base font-semibold text-gray-900">
               Aset yang Dimiliki
