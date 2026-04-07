@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { Inter } from "next/font/google";
 import { useState } from "react";
 import SideNavbar from "@/app/components/layout/sideNavbar";
@@ -26,8 +25,8 @@ function EditProfileModal({
 
   const fileInputId = "edit-avatar-input";
 
-  const handleFileChange = (e: any) => {
-    const file = e.target.files && e.target.files[0];
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (!file) return;
     const url = URL.createObjectURL(file);
     setAvatarPreview(url);
@@ -47,7 +46,7 @@ function EditProfileModal({
               alt="avatar"
               width={120}
               height={120}
-              className="rounded-full object-cover"
+              className="rounded-full object-cover w-[120px] h-[120px]"
             />
             <label
               htmlFor={fileInputId}
@@ -95,9 +94,7 @@ function EditProfileModal({
         />
 
         <button
-          onClick={() => {
-            onSave(name, email, avatarPreview);
-          }}
+          onClick={() => onSave(name, email, avatarPreview)}
           className="w-full bg-black text-white py-3 rounded-xl font-semibold"
         >
           Simpan Perubahan

@@ -17,32 +17,32 @@ const videos = [
   {
     id: 2,
     title: "Mengapa Berinvestasi Penting",
-    youtubeId: "c9PrrJlntos",
-    thumbnail: `https://img.youtube.com/vi/c9PrrJlntos/maxresdefault.jpg`,
+    youtubeId: "apTg84k5_J0",
+    thumbnail: `https://img.youtube.com/vi/apTg84k5_J0/maxresdefault.jpg`,
   },
   {
     id: 3,
     title: "Memahami Risiko Investasi",
-    youtubeId: "c9PrrJlntos",
-    thumbnail: `https://img.youtube.com/vi/c9PrrJlntos/maxresdefault.jpg`,
+    youtubeId: "UJMWXrKkeFM",
+    thumbnail: `https://img.youtube.com/vi/UJMWXrKkeFM/maxresdefault.jpg`,
   },
   {
     id: 4,
     title: "Diversifikasi Portofolio",
-    youtubeId: "c9PrrJlntos",
-    thumbnail: `https://img.youtube.com/vi/c9PrrJlntos/maxresdefault.jpg`,
+    youtubeId: "KDF2SogWuJs",
+    thumbnail: `https://img.youtube.com/vi/KDF2SogWuJs/maxresdefault.jpg`,
   },
   {
     id: 5,
     title: "Analisis Laporan Keuangan",
-    youtubeId: "c9PrrJlntos",
-    thumbnail: `https://img.youtube.com/vi/c9PrrJlntos/maxresdefault.jpg`,
+    youtubeId: "kUECuFPTWL4",
+    thumbnail: `https://img.youtube.com/vi/kUECuFPTWL4/maxresdefault.jpg`,
   },
   {
     id: 6,
     title: "Strategi Investasi Jangka Panjang",
-    youtubeId: "c9PrrJlntos",
-    thumbnail: `https://img.youtube.com/vi/c9PrrJlntos/maxresdefault.jpg`,
+    youtubeId: "vI5pwqTwxiQ",
+    thumbnail: `https://img.youtube.com/vi/vI5pwqTwxiQ/maxresdefault.jpg`,
   },
 ];
 

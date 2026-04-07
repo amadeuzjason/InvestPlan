@@ -10,43 +10,49 @@ const inter = Inter({ subsets: ["latin"] });
 const videos = [
   {
     id: 1,
-    title: "Tutorial Investasi untuk Pemula",
-    youtubeId: "c9PrrJlntos",
+    title: "Tutorial Invest untuk Pemula",
+    youtubeId: "T_dOr3kWbUM",
+    thumbnail: `https://img.youtube.com/vi/T_dOr3kWbUM/maxresdefault.jpg`,
     level: "Beginner",
     levelColor: "#26AA52",
   },
   {
     id: 2,
-    title: "Investasi Reksa Dana Untuk Pemula",
-    youtubeId: "c9PrrJlntos",
+    title: "Investasi Reksadana untuk Pemula",
+    youtubeId: "U53xSitih20",
+    thumbnail: `https://img.youtube.com/vi/U53xSitih20/maxresdefault.jpg`,
     level: "Beginner",
     levelColor: "#26AA52",
   },
   {
     id: 3,
     title: "Belajar Analisis Fundamental",
-    youtubeId: "c9PrrJlntos",
+    youtubeId: "tzbTQcJ2EHM",
+    thumbnail: `https://img.youtube.com/vi/tzbTQcJ2EHM/maxresdefault.jpg`,
     level: "Intermediate",
     levelColor: "#5AA4F0",
   },
   {
     id: 4,
     title: "Cara Baca Laporan Keuangan Perusahaan",
-    youtubeId: "c9PrrJlntos",
+    youtubeId: "d0Tyfk3B2BA",
+    thumbnail: `https://img.youtube.com/vi/d0Tyfk3B2BA/maxresdefault.jpg`,
     level: "Intermediate",
     levelColor: "#5AA4F0",
   },
   {
     id: 5,
     title: "International Diversification",
-    youtubeId: "c9PrrJlntos",
+    youtubeId: "1FXuMs6YRCY",
+    thumbnail: `https://img.youtube.com/vi/1FXuMs6YRCY/maxresdefault.jpg`,
     level: "Expert",
     levelColor: "#E07B39",
   },
   {
     id: 6,
     title: "Hedging Strategy and Mathematics Behind It",
-    youtubeId: "c9PrrJlntos",
+    youtubeId: "NGBPq_CSha8",
+    thumbnail: `https://img.youtube.com/vi/NGBPq_CSha8/maxresdefault.jpg`,
     level: "Expert",
     levelColor: "#E07B39",
   },
@@ -69,20 +75,23 @@ function VideoPlayerPage({
   const [watched, setWatched] = useState(progress);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Increment watched progress
   useEffect(() => {
-    if (watched < 100) {
-      intervalRef.current = setInterval(() => {
-        setWatched((prev) => {
-          const next = Math.min(prev + 1, 100);
-          onProgressUpdate(video.id, next);
-          return next;
-        });
-      }, 600);
-    }
+    if (watched >= 100) return;
+
+    intervalRef.current = setInterval(() => {
+      setWatched((prev) => Math.min(prev + 1, 100));
+    }, 600);
+
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, []);
+
+  // Sync progress ke parent setelah render selesai
+  useEffect(() => {
+    onProgressUpdate(video.id, watched);
+  }, [watched]);
 
   return (
     <div className="flex flex-col h-full">
@@ -148,7 +157,17 @@ function VideoPlayerPage({
           onClick={onBack}
           className="mt-4 flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-800 transition-colors"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <path d="M19 12H5M12 5l-7 7 7 7" />
           </svg>
           Kembali ke Daftar Modul
@@ -193,7 +212,13 @@ function VideoCard({
         {/* Play overlay */}
         <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/35 transition-colors">
           <div className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center shadow-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="white"
+            >
               <polygon points="5,3 19,12 5,21" />
             </svg>
           </div>
