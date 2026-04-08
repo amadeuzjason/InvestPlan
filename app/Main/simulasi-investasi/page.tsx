@@ -101,20 +101,21 @@ export default function SimulasiInvestasiPage() {
     <div className={`${inter.className} flex min-h-screen`}>
       <SideNavbar />
 
-      <div className="flex-1 bg-[#F7F8FA] min-h-screen p-8 overflow-y-auto">
+      <div id="simulation" className="flex-1 bg-[#F7F8FA] min-h-screen p-8 overflow-y-auto">
         {/* Header */}
         <div className="mb-7">
           <h2 className="text-2xl font-bold text-gray-900">Simulasi Investasi</h2>
           <p className="text-sm text-gray-400 mt-0.5">Mulai Simulasi Investasi Hari Ini</p>
         </div>
 
-        <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-sm p-6">
+        <div id="buy-invest" className="max-w-2xl mx-auto bg-white rounded-2xl shadow-sm p-6">
           <h3 className="text-lg font-semibold mb-4">Beli Saham</h3>
 
           <label className="block text-sm text-gray-600 mb-2">Pilih Nama Aset</label>
           <div className="relative mb-4">
             <button
               type="button"
+              id="select-invest"
               onClick={() => setOpenDropdown((s) => !s)}
               className="w-full text-left border border-gray-200 rounded-lg px-4 py-2 bg-white flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-indigo-100"
             >
@@ -143,6 +144,7 @@ export default function SimulasiInvestasiPage() {
 
           <label className="block text-sm text-gray-600 mb-2">Jumlah Unit</label>
           <input
+          id="select-unit"
             type="number"
             min={1}
             value={jumlah}
@@ -155,7 +157,7 @@ export default function SimulasiInvestasiPage() {
             className="w-full border border-gray-200 rounded-lg px-4 py-2 mb-4"
           />
 
-          <div className="border-t border-gray-100 pt-4">
+          <div id="invest-price" className="border-t border-gray-100 pt-4">
             <div className="flex justify-between mb-2">
               <span className="text-sm text-gray-600">Harga per Unit</span>
               <span className="text-sm font-medium text-gray-800">{formatRupiah(hargaPerUnit)} per Unit</span>
@@ -172,6 +174,7 @@ export default function SimulasiInvestasiPage() {
 
           <div className="flex gap-4 mt-6">
             <button
+            id="buy-button"
               onClick={handleBeli}
               disabled={!selected || !jumlah || total > virtualSaldo}
               className={`flex-1 py-3 rounded-xl text-white font-semibold ${(!selected || !jumlah || total > virtualSaldo) ? 'bg-gray-300 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'}`}
@@ -179,6 +182,7 @@ export default function SimulasiInvestasiPage() {
               Beli
             </button>
             <button
+            id="cancel-button"
               onClick={() => { setSelected(""); setJumlah(""); setError(null); }}
               className="flex-1 py-3 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold"
             >

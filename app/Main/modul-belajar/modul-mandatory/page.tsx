@@ -298,7 +298,7 @@ export default function ModulMandatoryPage() {
             </div>
 
             {/* Video Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-4xl">
+            <div id="mandatory-modul" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-4xl">
               {videos.map((video) => (
                 <VideoCard
                   key={video.id}

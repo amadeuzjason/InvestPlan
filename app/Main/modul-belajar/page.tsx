@@ -50,7 +50,7 @@ export default function ModulPage() {
     <div className={`${inter.className} flex min-h-screen`}>
       <SideNavbar />
 
-      <div className="flex-1 bg-[#F7F8FA] min-h-screen p-8 overflow-y-auto">
+      <div id="modul-belajar" className="flex-1 bg-[#F7F8FA] min-h-screen p-8 overflow-y-auto">
         {/* Header */}
         <div className="mb-7">
           <h2 className="text-2xl font-bold text-gray-900">
@@ -62,7 +62,7 @@ export default function ModulPage() {
         </div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl">
+        <div id="card-belajar" className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl">
           {modules.map((mod) => (
             <div
               key={mod.id}

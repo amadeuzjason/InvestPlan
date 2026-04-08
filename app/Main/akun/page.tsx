@@ -3,6 +3,7 @@
 import { Inter } from "next/font/google";
 import { useState } from "react";
 import SideNavbar from "@/app/components/layout/sideNavbar";
+import { useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,7 +34,7 @@ function EditProfileModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div id="edit-profile" className="fixed inset-0 z-50 flex items-center justify-center">
       <div
         className="absolute inset-0 bg-black/30 backdrop-blur-sm"
         onClick={onClose}
@@ -42,6 +43,7 @@ function EditProfileModal({
         <div className="flex flex-col items-center mb-6">
           <div className="relative">
             <img
+            id="photo-profile"
               src={avatarPreview}
               alt="avatar"
               width={120}
@@ -81,6 +83,7 @@ function EditProfileModal({
 
         <label className="text-sm text-gray-600">Nama</label>
         <input
+        id="edit-name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           className="w-full border border-gray-200 rounded-lg px-4 py-3 mb-4 mt-1"
@@ -88,12 +91,14 @@ function EditProfileModal({
 
         <label className="text-sm text-gray-600">Email</label>
         <input
+        id="edit-email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="w-full border border-gray-200 rounded-lg px-4 py-3 mb-6 mt-1"
         />
 
         <button
+        id="save-change"
           onClick={() => onSave(name, email, avatarPreview)}
           className="w-full bg-black text-white py-3 rounded-xl font-semibold"
         >
@@ -110,12 +115,25 @@ export default function AkunPage() {
   const [name, setName] = useState("Rizky Pratama");
   const [email, setEmail] = useState("rizky.pratama@gmail.com");
   const [avatar, setAvatar] = useState<string>("/Profil.png");
+  
+  useEffect(() => {
+  const open = () => setModalOpen(true);
+  const close = () => setModalOpen(false);
+
+  window.addEventListener("guide:open-edit", open);
+  window.addEventListener("guide:close-edit", close);
+
+  return () => {
+    window.removeEventListener("guide:open-edit", open);
+    window.removeEventListener("guide:close-edit", close);
+  };
+}, []);
 
   return (
     <div className={`${inter.className} flex min-h-screen`}>
       <SideNavbar />
 
-      <div className="flex-1 bg-[#F7F8FA] min-h-screen p-8 overflow-y-auto">
+      <div id="account" className="flex-1 bg-[#F7F8FA] min-h-screen p-8 overflow-y-auto">
         {/* Header */}
         <div className="mb-7">
           <h2 className="text-2xl font-bold text-gray-900">Akun Saya</h2>
@@ -125,7 +143,7 @@ export default function AkunPage() {
         </div>
 
         <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-2xl shadow-sm p-4 sm:p-6">
+          <div id="account-info" className="bg-white rounded-2xl shadow-sm p-4 sm:p-6">
             {/* Header Info + Button */}
             <div className="flex flex-row items-center justify-between mb-6 gap-3">
               <div>
@@ -137,6 +155,7 @@ export default function AkunPage() {
 
               <div className="pt-1 self-start sm:self-auto">
                 <button
+                id="edit-button"
                   onClick={() => setModalOpen(true)}
                   className="bg-black text-white px-4 py-2 rounded-xl font-semibold"
                 >

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import { useState } from "react";
 import SideNavbar from "@/app/components/layout/sideNavbar";
-import GuidePage from "@/app/components/guide/guidePage";
+import { useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -185,7 +185,7 @@ function KonfirmasiJualModal({
 
   return (
     // Backdrop dengan blur
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div id={id} className="fixed inset-0 z-50 flex items-center justify-center">
       <div
         className="absolute inset-0 bg-black/30 backdrop-blur-sm"
         onClick={onClose}
@@ -324,6 +324,24 @@ export default function DashboardPage() {
   const [successAsset, setSuccessAsset] = useState<Asset | null>(null)
   const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
 
+  useEffect(() => {
+  const open = () => {
+    if (!selectedAsset && assets.length > 0) {
+      setSelectedAsset(assets[0]);
+    }
+  };
+
+  const close = () => setSelectedAsset(null);
+
+  window.addEventListener("guide:open-sell", open);
+  window.addEventListener("guide:close-sell", close);
+
+  return () => {
+    window.removeEventListener("guide:open-sell", open);
+    window.removeEventListener("guide:close-sell", close);
+  };
+}, [selectedAsset]);
+
   const today = new Date().toLocaleDateString("id-ID", {
     weekday: "long",
     day: "numeric",
@@ -342,7 +360,6 @@ export default function DashboardPage() {
 
   return (
     <div className={`${inter.className} flex min-h-screen`}>
-      <GuidePage />
       <SideNavbar />
 
       <div id="dashboard-area" className="flex-1 bg-[#F7F8FA] min-h-screen p-8 overflow-y-auto">
@@ -452,6 +469,7 @@ export default function DashboardPage() {
                           />
                         </button>
                         <button
+                        data-open-sell
                           onClick={() => setSelectedAsset(asset)}
                           className="w-8 h-8 rounded-lg bg-white border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
                         >
@@ -473,7 +491,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Riwayat Transaksi Terbaru */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
+        <div id="transaction-history" className="bg-white rounded-2xl shadow-sm border border-gray-100">
           <div className="px-6 py-4 border-b border-gray-100">
             <h3 className="text-base font-semibold text-gray-900">
               Riwayat Transaksi Terbaru
@@ -526,7 +544,7 @@ export default function DashboardPage() {
       {/* Modal Konfirmasi Jual */}
       {selectedAsset && (
         <KonfirmasiJualModal
-        id="modal-cofirm"
+        id="modal-confirm"
           asset={selectedAsset}
           onClose={() => setSelectedAsset(null)}
           onConfirm={handleConfirmJual}
