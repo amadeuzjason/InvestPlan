@@ -1,15 +1,39 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/utils/supabase/client";
 
 export default function LoginPage() {
   const router = useRouter();
+  const supabase = createClient();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+    setLoading(true);
+
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+    if (error) {
+      setError(
+        error.message === "Invalid login credentials"
+          ? "Email atau password salah. Silakan coba lagi."
+          : error.message
+      );
+      setLoading(false);
+      return;
+    }
+
     router.push("/Main/dashboard");
+    router.refresh();
   };
 
   return (
@@ -59,6 +83,9 @@ export default function LoginPage() {
                   <label className="block text-sm font-medium text-gray-600 mb-1">Email</label>
                   <input
                     type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
                     className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200"
                   />
                 </div>
@@ -66,9 +93,18 @@ export default function LoginPage() {
                   <label className="block text-sm font-medium text-gray-600 mb-1">Password</label>
                   <input
                     type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
                     className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200"
                   />
                 </div>
+
+                {error && (
+                  <p className="text-sm text-red-500 bg-red-50 rounded-lg px-3 py-2">
+                    {error}
+                  </p>
+                )}
 
                 <div className="flex justify-end text-sm">
                   <a href="/forgot" className="text-blue-600 hover:underline">
@@ -78,15 +114,16 @@ export default function LoginPage() {
 
                 <button
                   type="submit"
-                  className="w-full bg-black text-white py-3 rounded-lg font-semibold shadow-md hover:bg-gray-800 transition-colors"
+                  disabled={loading}
+                  className="w-full bg-black text-white py-3 rounded-lg font-semibold shadow-md hover:bg-gray-800 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  Login
+                  {loading ? "Masuk..." : "Login"}
                 </button>
               </form>
 
               <p className="mt-6 text-center text-gray-500 text-sm">
-                Didn&apos;t have an account? 
-                <a href="/signup" className="font-semibold text-black"> Sign Up</a>
+                Didn&apos;t have an account?{" "}
+                <a href="/signup" className="font-semibold text-black">Sign Up</a>
               </p>
             </div>
           </div>

@@ -1,68 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
-const otpLength = 6;
-
-export default function VerifyOTP() {
-  const router = useRouter();
-  //isi otp
-  const [otp, setOtp] = useState<string[]>(Array(otpLength).fill(""));
-  const [countdown, setCountdown] = useState(0);
-  const [status, setStatus] = useState("");
-
-  const inputOtp = useRef<(HTMLInputElement | null)[]>([]);
-
-  const isOtpComplete = otp.every((digit) => digit !== "");
-
-  const handleInputOtp = (value: string, index: number) => {
-    //cek otp apakah angka dan huruf
-    if (!/^[a-zA-Z0-9]?$/.test(value)) return;
-
-    const newOtp = [...otp];
-    newOtp[index] = value;
-    setOtp(newOtp);
-
-    //pindah ke kanan saat isi
-    if (value && index < otpLength - 1) {
-      inputOtp.current[index + 1]?.focus();
-    }
-  };
-
-  //pindah ke kiri saat hapus
-  const handleBackspace = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    index: number,
-  ) => {
-    if (e.key === "Backspace" && !otp[index] && index > 0) {
-      inputOtp.current[index - 1]?.focus();
-    }
-  };
-
-  const handleResent = () => {
-    if (countdown > 0) return;
-    setStatus("code has been resent.");
-    setCountdown(120);
-  };
-
-  useEffect(() => {
-    if (countdown <= 0) return;
-
-    const timer = setInterval(() => {
-      setCountdown((prev) => prev - 1);
-    }, 1000);
-    return () => clearInterval(timer);
-  }, [countdown]);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!isOtpComplete) return;
-    router.push("/Main/dashboard");
-  };
-
+export default function VerifyPage() {
   return (
     <>
       <main className="relative min-h-screen w-full">
@@ -73,66 +14,45 @@ export default function VerifyOTP() {
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-white/30 z-0"/>
+        <div className="absolute inset-0 bg-white/30 z-0" />
 
-        <div className="relative z-10 flex items-center justify-center min-h-screen">
-          <form
-            onSubmit={handleSubmit}
-            className="w-[420px] bg-white rounded-2xl shadow-lg p-8 text-center border border-gray-200"
-          >
-            <h2 className="text-xl font-semibold mb-2">Verify Your Account</h2>
-
-            <p className="text-sm text-gray-500 mb-6">
-              Kami telah mengirimkan kode verifikasi ke email Anda
-            </p>
-
-            <div className="flex justify-center gap-3 mb-6">
-              {otp.map((val, i) => (
-                <input
-                  key={i}
-                  ref={(el) => {
-                    inputOtp.current[i] = el;
-                  }}
-                  type="text"
-                  maxLength={1}
-                  value={val}
-                  onChange={(e) => handleInputOtp(e.target.value, i)}
-                  onKeyDown={(e) => handleBackspace(e, i)}
-                  className="w-12 h-12 border rounded-md text-center text-lg focus:outline-none focus:ring-2 focus:ring-black"
-                />
-              ))}
+        <div className="relative z-10 flex items-center justify-center min-h-screen px-4">
+          <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 text-center border border-gray-200">
+            {/* Icon Envelope */}
+            <div className="w-16 h-16 rounded-full bg-blue-50 border-4 border-blue-300 flex items-center justify-center mx-auto mb-5">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#3B82F6"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+              </svg>
             </div>
 
-            <button
-              type="submit"
-              disabled={!isOtpComplete}
-              className={`w-full py-3 rounded-md mb-4 transition 
-             ${
-               isOtpComplete
-                 ? "bg-black text-white"
-                 : "bg-gray-300 text-gray-500 cursor-not-allowed"
-             }`}
-            >
-              Confirm
-            </button>
-
-            <p className="text-sm text-gray-500">
-              Didn’t receive the code?{" "}
-              {countdown > 0 ? (
-                <span className="text-gray-400">Resend in {countdown}s</span>
-              ) : (
-                <button
-                  type="button"
-                  onClick={handleResent}
-                  className="font-medium text-black"
-                >
-                  Resend
-                </button>
-              )}
+            <h2 className="text-xl font-semibold mb-2">Verifikasi Email Anda</h2>
+            <p className="text-sm text-gray-500 mb-6 leading-relaxed">
+              Kami telah mengirimkan email verifikasi ke alamat Anda.
+              Silakan buka email dan klik tautan verifikasi untuk mengaktifkan akun InvestPlan Anda.
             </p>
 
-            {status && <p className="text-xs text-gray-400 mt-2">{status}</p>}
-          </form>
+            <p className="text-xs text-gray-400 mb-6">
+              Tidak menerima email? Periksa folder <strong>Spam</strong> atau coba daftar ulang.
+            </p>
+
+            <Link
+              href="/login"
+              className="inline-block w-full py-3 rounded-md bg-black text-white text-sm font-medium hover:bg-gray-800 transition-colors"
+            >
+              Kembali ke Login
+            </Link>
+          </div>
         </div>
       </main>
     </>

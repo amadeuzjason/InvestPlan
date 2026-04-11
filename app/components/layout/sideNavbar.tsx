@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Inter } from "next/font/google";
 import { useState } from "react";
 import LogoutConfirm from "../logout/logoutconfirm";
+import { createClient } from "@/utils/supabase/client";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,11 +39,13 @@ export default function SideNavbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const router = useRouter();
   const [showLogout, setShowLogout] = useState(false);
+  const supabase = createClient();
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
     setShowLogout(false);
     router.push("/login");
+    router.refresh();
   };
 
   return (

@@ -1,8 +1,9 @@
 "use client";
 
 import { Inter } from "next/font/google";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import SideNavbar from "@/app/components/layout/sideNavbar";
+import { createClient } from "@/utils/supabase/client";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -69,11 +70,7 @@ function VideoPlayerPage({
   useEffect(() => {
     if (playing && watched < 100) {
       intervalRef.current = setInterval(() => {
-        setWatched((prev) => {
-          const next = Math.min(prev + 1, 100);
-          onProgressUpdate(video.id, next);
-          return next;
-        });
+        setWatched((prev) => Math.min(prev + 1, 100));
       }, 600);
     } else {
       if (intervalRef.current) clearInterval(intervalRef.current);
@@ -82,6 +79,10 @@ function VideoPlayerPage({
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, [playing, watched]);
+
+  useEffect(() => {
+    onProgressUpdate(video.id, watched);
+  }, [watched, video.id, onProgressUpdate]);
 
   return (
     <div className="flex flex-col h-full">
@@ -233,10 +234,45 @@ function VideoCard({
 export default function ModulMandatoryPage() {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [progressMap, setProgressMap] = useState<Record<number, number>>({});
+  const supabase = createClient();
 
-  const handleProgressUpdate = (id: number, pct: number) => {
-    setProgressMap((prev) => ({ ...prev, [id]: pct }));
-  };
+  useEffect(() => {
+    const fetchProgress = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data } = await supabase.from("modul_progress").select("modul_id").eq("user_id", user.id);
+      if (data) {
+        const initMap: Record<number, number> = {};
+        data.forEach((row) => {
+          const mId = parseInt(row.modul_id);
+          if (!isNaN(mId)) initMap[mId] = 100;
+        });
+        setProgressMap((prev) => ({ ...prev, ...initMap }));
+      }
+    };
+    fetchProgress();
+  }, [supabase]);
+
+  const handleProgressUpdate = useCallback(
+    async (id: number, pct: number) => {
+      setProgressMap((prev) => {
+        // Hanya update state jika nilai berubah untuk hindari infinite loop
+        if (prev[id] === pct) return prev;
+        return { ...prev, [id]: pct };
+      });
+
+      if (pct === 100) {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          await supabase.from("modul_progress").upsert(
+            { user_id: user.id, modul_id: id.toString() },
+            { onConflict: "user_id, modul_id" }
+          );
+        }
+      }
+    },
+    [supabase]
+  );
 
   const overallProgress =
     videos.length > 0

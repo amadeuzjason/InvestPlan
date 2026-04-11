@@ -41,6 +41,23 @@ const modules = [
     progressLabel: "10% Selesai",
     link: "/Main/modul-belajar/modul-opsional",
   },
+  {
+    id: 3,
+    title: "Simulasi Mekanisme Pasar",
+    badge: "Interaktif",
+    badgeBg: "rgba(255,165,0,0.18)",
+    badgeText: "#E65100",
+    progress: 100, // It's an interactive tool, not exactly tracked like a video but let's show 100% or just leave 0
+    progressColor: "#FF9800",
+    buttonLabel: "Coba Simulasi",
+    buttonBg: "#FF9800",
+    buttonText: "white",
+    bg: "/images/modul/bg-pasar.jpg", // The image might not exist, but fallback behavior is fine
+    cardBg: "linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 60%, #FFCC80 100%)",
+    textColor: "#5D4037",
+    progressLabel: "Alat Interaktif Buka Terus",
+    link: "/Main/modul-belajar/simulasi-mekanisme-pasar",
+  },
 ];
 
 export default function ModulPage() {
